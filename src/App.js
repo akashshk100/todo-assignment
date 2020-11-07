@@ -14,8 +14,6 @@ const sortBy = (notes) => {
   }
   notes.forEach( note => {
     let notePriority = note.priority
-    console.log(notePriority)
-    console.log(groupedNotes[notePriority])
     groupedNotes[notePriority].push(note)
   } )
   return groupedNotes
