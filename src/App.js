@@ -60,10 +60,17 @@ class App extends Component{
 
   editNote = (id, summary, description, dueDate, priority) => {
     let tempNotes = this.state.notes
-    tempNotes[id].summary = summary
-    tempNotes[id].description = description
-    tempNotes[id].dueDate = dueDate
-    tempNotes[id].priority = priority
+    let tempIndex = -1
+    for (let index = 0; index < tempNotes.length; index++) {
+      if(tempNotes[index].id === id){
+        tempIndex = index
+        break
+      }
+    }
+    tempNotes[tempIndex].summary = summary
+    tempNotes[tempIndex].description = description
+    tempNotes[tempIndex].dueDate = dueDate
+    tempNotes[tempIndex].priority = priority
     this.setState({
       notes: tempNotes
     })
@@ -71,7 +78,14 @@ class App extends Component{
 
   removeNote = (id) => {
     let tempNotes = this.state.notes
-    tempNotes.splice(id, 1)
+    let tempIndex = -1
+    for (let index = 0; index < tempNotes.length; index++) {
+      if(tempNotes[index].id === id){
+        tempIndex = index
+        break
+      }
+    }
+    tempNotes.splice(tempIndex, 1)
     this.setState({
       notes: tempNotes
     })
@@ -79,7 +93,14 @@ class App extends Component{
 
   changeState = (id) => {
     let tempNotes = this.state.notes
-    tempNotes[id].currentState = !tempNotes[id].currentState
+    let tempIndex = -1
+    for (let index = 0; index < tempNotes.length; index++) {
+      if(tempNotes[index].id === id){
+        tempIndex = index
+        break
+      }
+    }
+    tempNotes[tempIndex].currentState = !tempNotes[tempIndex].currentState
     this.setState({
       notes: tempNotes
     })
