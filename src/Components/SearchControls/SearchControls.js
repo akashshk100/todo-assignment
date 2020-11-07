@@ -13,6 +13,8 @@ const SearchControls = (props) => {
     let [keyword, setKeyword] = useState("")
 
     const handleKeyword = (event) => {
+        // console.log(event.target.value)
+        props.handleSearch(event.target.value)
         setKeyword(event.target.value)
     }
 

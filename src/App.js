@@ -9,6 +9,7 @@ class App extends Component{
   constructor(props){
     super(props)
     this.state = {
+      searchActive: false,
       addNoteModal: false,
       noteId: 1,
       notes: [
@@ -21,7 +22,19 @@ class App extends Component{
           createdAt: new Date(2020, 11, 6),
           dueDate: new Date(2020, 11, 15)
         }
-      ]
+      ],
+      forwardedNotes:  [
+        { 
+          id: 0,
+          currentState: false, 
+          summary: "Lorem ipsum dolor.",
+          description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec pharetra eget felis at condimentum. Maecenas a massa vitae ex posuere.",
+          priority: "low",
+          createdAt: new Date(2020, 11, 6),
+          dueDate: new Date(2020, 11, 15)
+        }
+      ],
+      searchNotes: null
     }
   }
 
@@ -49,9 +62,8 @@ class App extends Component{
       priority: priority
     })
     this.setState({
-      notes: tempNotes
-    })
-    this.setState({
+      notes: tempNotes,
+      forwardedNotes: tempNotes,
       noteId: this.state.noteId+1
     })
     // console.log(tempNotes)
@@ -72,7 +84,8 @@ class App extends Component{
     tempNotes[tempIndex].dueDate = dueDate
     tempNotes[tempIndex].priority = priority
     this.setState({
-      notes: tempNotes
+      notes: tempNotes,
+      forwardedNotes: tempNotes
     })
   }
 
@@ -87,7 +100,8 @@ class App extends Component{
     }
     tempNotes.splice(tempIndex, 1)
     this.setState({
-      notes: tempNotes
+      notes: tempNotes,
+      forwardedNotes: tempNotes
     })
   }
 
@@ -102,11 +116,47 @@ class App extends Component{
     }
     tempNotes[tempIndex].currentState = !tempNotes[tempIndex].currentState
     this.setState({
-      notes: tempNotes
+      notes: tempNotes,
+      forwardedNotes: tempNotes
     })
   }
-  
-  render(){
+
+  handleSearch = (searchString) => {
+    if(searchString.length !== 0){
+      let tempNotes = this.state.forwardedNotes.filter( (note, index) => {
+        console.log(note.summary.toLowerCase().includes(searchString.toLowerCase()))
+        return note.summary.toLowerCase().includes(searchString.toLowerCase())  
+      })
+      this.setState({
+        searchNotes: tempNotes,
+        searchActive: true
+      })
+    }
+    else{
+      this.setState({
+        searchActive: false
+      })
+    }
+  }
+
+  render = () => {
+
+    let notesContent = (this.state.searchActive) ? (
+      <Notes 
+        notes = {this.state.searchNotes} 
+        removeNote = {this.removeNote}
+        changeState = {this.changeState}
+        editNote = {this.editNote}
+      />
+    ) : (
+      <Notes 
+        notes = {this.state.forwardedNotes} 
+        removeNote = {this.removeNote}
+        changeState = {this.changeState}
+        editNote = {this.editNote}
+      />
+    )
+
     return(
       <div style={ {width: "70%", margin: "auto" } }>
         <Layout openAddNoteModal={this.openAddNoteModal}>
@@ -117,15 +167,10 @@ class App extends Component{
             addNote={this.addNote} 
           />
           <div style= { {marginTop: "30px"} }>
-            <SearchControls />
+            <SearchControls handleSearch={this.handleSearch} />
           </div>
           <div style= { {marginTop: "30px"} }>
-            <Notes 
-              notes = {this.state.notes} 
-              removeNote = {this.removeNote}
-              changeState = {this.changeState}
-              editNote = {this.editNote}
-              ></Notes>
+            {notesContent}
           </div>
         </Layout>
       </div>
