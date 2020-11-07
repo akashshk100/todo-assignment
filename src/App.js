@@ -66,7 +66,7 @@ class App extends Component{
       forwardedNotes: tempNotes,
       noteId: this.state.noteId+1
     })
-    // console.log(tempNotes)
+    console.log(tempNotes)
     // console.log(this.state.notes)
   }
 

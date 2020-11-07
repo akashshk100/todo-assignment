@@ -28,7 +28,7 @@ class Notes extends Component {
     sortBySummary = (order) => {
         let tempNotes = null
         if(order){
-            tempNotes = this.state.notes.sort( (a,b) => {
+            tempNotes = this.state.forwardedNotes.sort( (a,b) => {
                 if (a.summary.toLowerCase() < b.summary.toLowerCase()){
                     return -1 
                 }
@@ -39,7 +39,7 @@ class Notes extends Component {
             })
         }
         else{
-            tempNotes = this.state.notes.sort( (a,b) => {
+            tempNotes = this.state.forwardedNotes.sort( (a,b) => {
                 if (a.summary.toLowerCase() < b.summary.toLowerCase()){
                     return 1 
                 }
@@ -59,12 +59,12 @@ class Notes extends Component {
     sortByCreatedAt = (order) => {
         let tempNotes = null
         if(order){
-            tempNotes = this.state.notes.sort( (a,b) => {
+            tempNotes = this.state.forwardedNotes.sort( (a,b) => {
                 return a.createdAt - b.createdAt
             })
         }
         else{
-            tempNotes = this.state.notes.sort( (a,b) => {
+            tempNotes = this.state.forwardedNotes.sort( (a,b) => {
                 return b.createdAt - a.createdAt
             })
         }
@@ -78,12 +78,12 @@ class Notes extends Component {
     sortByDueDate = (order) => {
         let tempNotes = null
         if(order){
-            tempNotes = this.state.notes.sort( (a,b) => {
+            tempNotes = this.state.forwardedNotes.sort( (a,b) => {
                 return a.dueDate - b.dueDate
             })
         }
         else{
-            tempNotes = this.state.notes.sort( (a,b) => {
+            tempNotes = this.state.forwardedNotes.sort( (a,b) => {
                 return b.dueDate - a.dueDate
             })
         }

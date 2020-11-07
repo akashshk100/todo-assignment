@@ -47,6 +47,7 @@ const NotesTable= (props) => {
   };
 
   const handleEdit = (id) => {
+    console.log(id)
     setAddNoteModal({
       clicked: true,
       id: id,
@@ -84,19 +85,32 @@ const NotesTable= (props) => {
   }
 
 
-  let modalContent = (addNoteModal.clicked)? (
-    <AddNoteModal 
-    id = {addNoteModal.id}
-    open={true} 
-    closeAddNoteModal={ () => { setAddNoteModal({clicked: false, id: null, viewOnly: null}) } } 
-    disabled={addNoteModal.viewOnly}
-    addNote={props.editNote} 
-    summary = {props.notes[addNoteModal.id].summary}
-    description = {props.notes[addNoteModal.id].description}
-    priority = {props.notes[addNoteModal.id].priority}
-    dueDate = {props.notes[addNoteModal.id].dueDate}
-    />
-  ) : null
+  let modalContent = null 
+  if(addNoteModal.clicked){
+    console.log(props.notes)
+    let tempIndex = -1
+    for (let index = 0; index < props.notes.length; index++) {
+      if(props.notes[index].id === addNoteModal.id){
+        tempIndex = index
+        break
+      }
+    }
+    modalContent = (
+      <AddNoteModal 
+        id = {addNoteModal.id}
+        open={true} 
+        closeAddNoteModal={ () => { setAddNoteModal({clicked: false, id: null, viewOnly: null}) } } 
+        disabled={addNoteModal.viewOnly}
+        addNote={props.editNote} 
+        summary = {props.notes[tempIndex].summary}
+        description = {props.notes[tempIndex].description}
+        priority = {props.notes[tempIndex].priority}
+        dueDate = {props.notes[tempIndex].dueDate}
+      />
+    ) 
+  }else{
+    modalContent = null
+  }
 
   return (
     <Aux>
