@@ -87,7 +87,7 @@ const NotesTable= (props) => {
 
   let modalContent = null 
   if(addNoteModal.clicked){
-    console.log(props.notes)
+    // console.log(props.notes)
     let tempIndex = -1
     for (let index = 0; index < props.notes.length; index++) {
       if(props.notes[index].id === addNoteModal.id){

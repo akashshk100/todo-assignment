@@ -116,7 +116,7 @@ class AddNoteModal extends Component {
                 summary: "",
                 description: "",
                 date: new Date(),
-                priority: ""
+                priority: "none"
             })
             this.props.closeAddNoteModal()
         }

@@ -4,6 +4,14 @@ import AddNoteModal from './Container/AddNoteModal/AddNoteModal'
 import SearchControls from './Components/SearchControls/SearchControls'
 import Notes from './Container/Notes/Notes'
 
+
+// const groupBy = (notes) => {
+//   notes.forEach( note => {
+    
+//   } )
+// }
+
+
 class App extends Component{
 
   constructor(props){
@@ -66,7 +74,7 @@ class App extends Component{
       forwardedNotes: tempNotes,
       noteId: this.state.noteId+1
     })
-    console.log(tempNotes)
+    // console.log(tempNotes)
     // console.log(this.state.notes)
   }
 

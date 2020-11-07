@@ -13,7 +13,6 @@ const SearchControls = (props) => {
     let [keyword, setKeyword] = useState("")
 
     const handleKeyword = (event) => {
-        // console.log(event.target.value)
         props.handleSearch(event.target.value)
         setKeyword(event.target.value)
     }
@@ -48,7 +47,7 @@ const SearchControls = (props) => {
                         size="small"
                         value={keyword}
                         onChange={handleKeyword}               
-                        label="Search Task"
+                        label="Search in All Task"
                         variant="outlined"
                         fullWidth
                     />
