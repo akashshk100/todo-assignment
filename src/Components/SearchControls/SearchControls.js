@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, {useEffect ,useState} from 'react'
 import Aux from '../../HOC/Auxilliary/Auxilliary'
 import Grid from '@material-ui/core/Grid'
 import Select from '@material-ui/core/Select'
@@ -9,16 +9,21 @@ import TextField from '@material-ui/core/TextField'
 
 const SearchControls = (props) => {
 
-    let [priority, setPriority] = useState("none")
+    let [sortBy, setSortBy] = useState("none")
     let [keyword, setKeyword] = useState("")
+
+    useEffect( () => {
+        setSortBy(props.sortedBy)
+    }, [props.sortedBy])
 
     const handleKeyword = (event) => {
         props.handleSearch(event.target.value)
         setKeyword(event.target.value)
     }
 
-    const handlePriority = (event) => {
-        setPriority(event.target.value)
+    const handleSortby = (event) => {
+        setSortBy(event.target.value)
+        props.handleSortby(event.target.value)
     }
 
     return(
@@ -30,15 +35,15 @@ const SearchControls = (props) => {
                             <Select
                                 labelId="select-priority"
                                 label="Priority"
-                                value={priority}
-                                onChange={ handlePriority }
+                                value={sortBy}
+                                onChange={ handleSortby }
                             >
                                 <MenuItem value="none">
                                     <em>None</em>
                                 </MenuItem>
-                                <MenuItem value="Low">Priority</MenuItem>
-                                <MenuItem value="Medium">Created On</MenuItem>
-                                <MenuItem value="High">Due On</MenuItem>
+                                <MenuItem value="priority">Priority</MenuItem>
+                                <MenuItem value="createdOn" disabled>Created On</MenuItem>
+                                <MenuItem value="dueOn" disabled>Due On</MenuItem>
                             </Select>
                     </FormControl>
                 </Grid>

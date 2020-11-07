@@ -5,11 +5,21 @@ import SearchControls from './Components/SearchControls/SearchControls'
 import Notes from './Container/Notes/Notes'
 
 
-// const groupBy = (notes) => {
-//   notes.forEach( note => {
-    
-//   } )
-// }
+const sortBy = (notes) => {
+  let groupedNotes = {
+    none: [],
+    low: [],
+    medium: [],
+    high: []
+  }
+  notes.forEach( note => {
+    let notePriority = note.priority
+    console.log(notePriority)
+    console.log(groupedNotes[notePriority])
+    groupedNotes[notePriority].push(note)
+  } )
+  return groupedNotes
+}
 
 
 class App extends Component{
@@ -18,6 +28,7 @@ class App extends Component{
     super(props)
     this.state = {
       searchActive: false,
+      sortedBy: "none",
       addNoteModal: false,
       noteId: 1,
       notes: [
@@ -72,7 +83,8 @@ class App extends Component{
     this.setState({
       notes: tempNotes,
       forwardedNotes: tempNotes,
-      noteId: this.state.noteId+1
+      noteId: this.state.noteId+1,
+      sortedBy: "none"
     })
     // console.log(tempNotes)
     // console.log(this.state.notes)
@@ -93,7 +105,8 @@ class App extends Component{
     tempNotes[tempIndex].priority = priority
     this.setState({
       notes: tempNotes,
-      forwardedNotes: tempNotes
+      forwardedNotes: tempNotes,
+      sortedBy: "none"
     })
   }
 
@@ -109,7 +122,8 @@ class App extends Component{
     tempNotes.splice(tempIndex, 1)
     this.setState({
       notes: tempNotes,
-      forwardedNotes: tempNotes
+      forwardedNotes: tempNotes,
+      sortedBy: "none"
     })
   }
 
@@ -125,7 +139,8 @@ class App extends Component{
     tempNotes[tempIndex].currentState = !tempNotes[tempIndex].currentState
     this.setState({
       notes: tempNotes,
-      forwardedNotes: tempNotes
+      forwardedNotes: tempNotes,
+      sortedBy: "none"
     })
   }
 
@@ -143,6 +158,23 @@ class App extends Component{
     else{
       this.setState({
         searchActive: false
+      })
+    }
+  }
+
+  handleSortBy = (value) => {
+    if(value === "priority"){
+      let tempNotes = sortBy(this.state.forwardedNotes)
+      let concatedNotes = tempNotes.none.concat(tempNotes.low.concat(tempNotes.medium.concat(tempNotes.high)))
+      this.setState({
+        sortedBy: value,
+        forwardedNotes: concatedNotes
+      })
+    }
+    else{
+      this.setState({
+        sortedBy: value,
+        forwardedNotes: this.state.notes
       })
     }
   }
@@ -175,7 +207,7 @@ class App extends Component{
             addNote={this.addNote} 
           />
           <div style= { {marginTop: "30px"} }>
-            <SearchControls handleSearch={this.handleSearch} />
+            <SearchControls handleSearch={this.handleSearch} handleSortby={this.handleSortBy} sortedBy={this.state.sortedBy}/>
           </div>
           <div style= { {marginTop: "30px"} }>
             {notesContent}
